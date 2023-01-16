@@ -1,0 +1,18 @@
+{
+    "sourceFile": "myconfig/van.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1673794243695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1673794243695,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\n\n# Model settings\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(type='VAN', arch='b0', drop_path_rate=0.1),\n    neck=dict(type='GlobalAveragePooling'),\n    head=dict(\n        type='LinearClsHead',\n        num_classes=1000,\n        in_channels=256,\n        init_cfg=None,  # suppress the default init_cfg of LinearClsHead.\n        loss=dict(\n            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n        cal_acc=False),\n    init_cfg=[\n        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n    ])"
+        }
+    ]
+}

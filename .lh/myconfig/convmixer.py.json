@@ -1,0 +1,26 @@
+{
+    "sourceFile": "myconfig/convmixer.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1673779662549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1673780023680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     backbone=dict(type='ConvMixer', arch='768/32', act_cfg=dict(type='ReLU')),\n     neck=dict(type='GlobalAveragePooling'),\n     head=dict(\n         type='LinearClsHead',\n-        num_classes=1000,\n+        num_classes=9,\n         in_channels=768,\n         loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n     )\n )\n"
+                },
+                {
+                    "date": 1673780032488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n     f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128_re.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n"
+                }
+            ],
+            "date": 1673779662549,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(type='ConvMixer', arch='768/32', act_cfg=dict(type='ReLU')),\n    neck=dict(type='GlobalAveragePooling'),\n    head=dict(\n        type='LinearClsHead',\n        num_classes=1000,\n        in_channels=768,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n    )\n)\n"
+        }
+    ]
+}

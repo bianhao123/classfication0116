@@ -1,0 +1,22 @@
+{
+    "sourceFile": "configs/_base_/schedules/mydata_bs128_resize224.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1673794114839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1673794128947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n # optimizer\n optimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001)\n optimizer_config = dict(grad_clip=None)\n # learning policy\n-lr_config = dict(policy='step', step=[100, 150])\n+lr_config = dict(policy='step', step=[100, 500])\n runner = dict(type='EpochBasedRunner', max_epochs=500)\n"
+                }
+            ],
+            "date": 1673794114839,
+            "name": "Commit-0",
+            "content": "# optimizer\noptimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001)\noptimizer_config = dict(grad_clip=None)\n# learning policy\nlr_config = dict(policy='step', step=[100, 150])\nrunner = dict(type='EpochBasedRunner', max_epochs=500)\n"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "myconfig/deit.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1673794698896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1673794708919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,7 +35,7 @@\n         dict(type='TruncNormal', layer='Linear', std=.02),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.),\n     ],\n     train_cfg=dict(augments=[\n-        dict(type='BatchMixup', alpha=0.8, num_classes=1000, prob=0.5),\n-        dict(type='BatchCutMix', alpha=1.0, num_classes=1000, prob=0.5)\n+        dict(type='BatchMixup', alpha=0.8, num_classes=9, prob=0.5),\n+        dict(type='BatchCutMix', alpha=1.0, num_classes=9, prob=0.5)\n     ]))\n"
+                },
+                {
+                    "date": 1673794984788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,23 +19,24 @@\n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n         type='VisionTransformer',\n-        arch='deit-small',\n+        arch='b',\n         img_size=224,\n-        patch_size=16),\n+        patch_size=16,\n+        drop_rate=0.1,\n+        init_cfg=[\n+            dict(\n+                type='Kaiming',\n+                layer='Conv2d',\n+                mode='fan_in',\n+                nonlinearity='linear')\n+        ]),\n     neck=None,\n     head=dict(\n         type='VisionTransformerClsHead',\n         num_classes=1000,\n-        in_channels=384,\n+        in_channels=768,\n         loss=dict(\n-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n-    ),\n-    init_cfg=[\n-        dict(type='TruncNormal', layer='Linear', std=.02),\n-        dict(type='Constant', layer='LayerNorm', val=1., bias=0.),\n-    ],\n-    train_cfg=dict(augments=[\n-        dict(type='BatchMixup', alpha=0.8, num_classes=9, prob=0.5),\n-        dict(type='BatchCutMix', alpha=1.0, num_classes=9, prob=0.5)\n-    ]))\n+            type='LabelSmoothLoss', label_smooth_val=0.1,\n+            mode='classy_vision'),\n+    ))\n"
+                }
+            ],
+            "date": 1673794698896,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\n\n# Model settings\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='VisionTransformer',\n        arch='deit-small',\n        img_size=224,\n        patch_size=16),\n    neck=None,\n    head=dict(\n        type='VisionTransformerClsHead',\n        num_classes=1000,\n        in_channels=384,\n        loss=dict(\n            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n    ),\n    init_cfg=[\n        dict(type='TruncNormal', layer='Linear', std=.02),\n        dict(type='Constant', layer='LayerNorm', val=1., bias=0.),\n    ],\n    train_cfg=dict(augments=[\n        dict(type='BatchMixup', alpha=0.8, num_classes=1000, prob=0.5),\n        dict(type='BatchCutMix', alpha=1.0, num_classes=1000, prob=0.5)\n    ]))\n"
+        }
+    ]
+}

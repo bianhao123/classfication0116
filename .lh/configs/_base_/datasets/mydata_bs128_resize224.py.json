@@ -1,0 +1,50 @@
+{
+    "sourceFile": "configs/_base_/datasets/mydata_bs128_resize224.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1672058415472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672058474268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,11 @@\n train_pipeline = [\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n+\n+    dict(type='LoadImageFromFile'),\n     dict(type='Resize', size=(224, 224)),\n-    dict(type='LoadImageFromFile'),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='ToTensor', keys=['gt_label']),\n     dict(type='Collect', keys=['img', 'gt_label'])\n"
+                },
+                {
+                    "date": 1672058538751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,14 +21,15 @@\n     dict(type='Collect', keys=['img', 'gt_label'])\n ]\n test_pipeline = [\n     dict(type='LoadImageFromFile'),\n+    dict(type='Resize', size=(224, 224)),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='Collect', keys=['img'])\n ]\n data = dict(\n-    samples_per_gpu=128,\n+    samples_per_gpu=32,\n     workers_per_gpu=1,\n     train=dict(\n         type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData/train',\n         pipeline=train_pipeline),\n"
+                },
+                {
+                    "date": 1672058554344,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='Collect', keys=['img'])\n ]\n data = dict(\n-    samples_per_gpu=32,\n+    samples_per_gpu=4,\n     workers_per_gpu=1,\n     train=dict(\n         type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData/train',\n         pipeline=train_pipeline),\n"
+                },
+                {
+                    "date": 1672060516794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='Collect', keys=['img'])\n ]\n data = dict(\n-    samples_per_gpu=4,\n+    samples_per_gpu=16,\n     workers_per_gpu=1,\n     train=dict(\n         type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData/train',\n         pipeline=train_pipeline),\n"
+                },
+                {
+                    "date": 1673776039755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,13 +30,13 @@\n data = dict(\n     samples_per_gpu=16,\n     workers_per_gpu=1,\n     train=dict(\n-        type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData/train',\n+        type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData64/train',\n         pipeline=train_pipeline),\n     val=dict(\n         type=dataset_type,\n-        data_prefix='/data111/bianhao/code/xy/yinhe/myData/val',\n+        data_prefix='/data111/bianhao/code/xy/yinhe/myData64/val',\n         pipeline=test_pipeline,\n         test_mode=True),\n     test=dict(\n         type=dataset_type,\n"
+                },
+                {
+                    "date": 1673776053345,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,7 +39,7 @@\n         pipeline=test_pipeline,\n         test_mode=True),\n     test=dict(\n         type=dataset_type,\n-        data_prefix='data/cifar10',\n+        data_prefix='/data111/bianhao/code/xy/yinhe/myData64/val',\n         pipeline=test_pipeline,\n         test_mode=True))\n"
+                },
+                {
+                    "date": 1673779744587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='Collect', keys=['img'])\n ]\n data = dict(\n-    samples_per_gpu=16,\n+    samples_per_gpu=32,\n     workers_per_gpu=1,\n     train=dict(\n         type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData64/train',\n         pipeline=train_pipeline),\n"
+                },
+                {
+                    "date": 1673794358224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='Collect', keys=['img'])\n ]\n data = dict(\n-    samples_per_gpu=32,\n+    samples_per_gpu=8,\n     workers_per_gpu=1,\n     train=dict(\n         type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData64/train',\n         pipeline=train_pipeline),\n"
+                }
+            ],
+            "date": 1672058415472,
+            "name": "Commit-0",
+            "content": "# dataset settings\ndataset_type = 'CustomDataset'\n# img_norm_cfg = dict(\n#     mean=[125.307, 122.961, 113.8575],\n#     std=[51.5865, 50.847, 51.255],\n#     to_rgb=False)\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\ntrain_pipeline = [\n    # dict(type='RandomCrop', size=32, padding=4),\n    # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n    # ,\n    dict(type='Resize', size=(224, 224)),\n    dict(type='LoadImageFromFile'),\n    dict(type='Normalize', **img_norm_cfg),\n    dict(type='ImageToTensor', keys=['img']),\n    dict(type='ToTensor', keys=['gt_label']),\n    dict(type='Collect', keys=['img', 'gt_label'])\n]\ntest_pipeline = [\n    dict(type='LoadImageFromFile'),\n    dict(type='Normalize', **img_norm_cfg),\n    dict(type='ImageToTensor', keys=['img']),\n    dict(type='Collect', keys=['img'])\n]\ndata = dict(\n    samples_per_gpu=128,\n    workers_per_gpu=1,\n    train=dict(\n        type=dataset_type, data_prefix='/data111/bianhao/code/xy/yinhe/myData/train',\n        pipeline=train_pipeline),\n    val=dict(\n        type=dataset_type,\n        data_prefix='/data111/bianhao/code/xy/yinhe/myData/val',\n        pipeline=test_pipeline,\n        test_mode=True),\n    test=dict(\n        type=dataset_type,\n        data_prefix='data/cifar10',\n        pipeline=test_pipeline,\n        test_mode=True))\n"
+        }
+    ]
+}

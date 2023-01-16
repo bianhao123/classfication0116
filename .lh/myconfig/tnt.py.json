@@ -1,0 +1,62 @@
+{
+    "sourceFile": "myconfig/tnt.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 11,
+            "patches": [
+                {
+                    "date": 1672058001881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672058013159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,26 +10,9 @@\n checkpoint_config = dict(interval=10)\n log_config = dict(interval=100, hooks=[dict(\n     type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n \n-model = dict(\n-    type='ImageClassifier',\n-    backbone=dict(\n-        type='Conformer', arch='base', drop_path_rate=0.1, init_cfg=None),\n-    neck=None,\n-    head=dict(\n-        type='ConformerHead',\n-        num_classes=9,\n-        in_channels=[1536, 576],\n-        init_cfg=None,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n-    init_cfg=[\n-        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n-        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n-    ],\n-)\n \n-\n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n         type='TNT',\n@@ -52,8 +35,7 @@\n     head=dict(\n         type='LinearClsHead',\n         num_classes=9,\n         in_channels=384,\n-        loss=dict(\n-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n         topk=(1, 5),\n         init_cfg=dict(type='TruncNormal', layer='Linear', std=.02)))\n"
+                },
+                {
+                    "date": 1672058038280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     type='ImageClassifier',\n     backbone=dict(\n         type='TNT',\n         arch='s',\n-        img_size=224,\n+        img_size=32,\n         patch_size=16,\n         in_channels=3,\n         ffn_ratio=4,\n         qkv_bias=False,\n"
+                },
+                {
+                    "date": 1672058088104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     type='ImageClassifier',\n     backbone=dict(\n         type='TNT',\n         arch='s',\n-        img_size=32,\n+        img_size=224,\n         patch_size=16,\n         in_channels=3,\n         ffn_ratio=4,\n         qkv_bias=False,\n"
+                },
+                {
+                    "date": 1672058123561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,18 @@\n checkpoint_config = dict(interval=10)\n log_config = dict(interval=100, hooks=[dict(\n     type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n \n-\n+train_pipeline = [\n+    # dict(type='RandomCrop', size=32, padding=4),\n+    # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n+    # ,\n+    dict(type='LoadImageFromFile'),\n+    dict(type='Normalize', **img_norm_cfg),\n+    dict(type='ImageToTensor', keys=['img']),\n+    dict(type='ToTensor', keys=['gt_label']),\n+    dict(type='Collect', keys=['img', 'gt_label'])\n+]\n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n         type='TNT',\n"
+                },
+                {
+                    "date": 1672058151755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,12 @@\n \n checkpoint_config = dict(interval=10)\n log_config = dict(interval=100, hooks=[dict(\n     type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n-\n+img_norm_cfg = dict(\n+    mean=[0, 0, 0],\n+    std=[255.0, 255.0, 255.0],\n+    to_rgb=False)\n train_pipeline = [\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n"
+                },
+                {
+                    "date": 1672058170910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n train_pipeline = [\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n+    dict(type='Resize', ),\n     dict(type='LoadImageFromFile'),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='ToTensor', keys=['gt_label']),\n"
+                },
+                {
+                    "date": 1672058210036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n train_pipeline = [\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n-    dict(type='Resize', ),\n+    dict(type='Resize', size=224),\n     dict(type='LoadImageFromFile'),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='ToTensor', keys=['gt_label']),\n"
+                },
+                {
+                    "date": 1672058260588,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n train_pipeline = [\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n+    delete\n     dict(type='Resize', size=224),\n     dict(type='LoadImageFromFile'),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n"
+                },
+                {
+                    "date": 1672058328113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     # dict(type='RandomCrop', size=32, padding=4),\n     # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n     # ,\n     delete\n-    dict(type='Resize', size=224),\n+    dict(type='Resize', size=(224, 224)),\n     dict(type='LoadImageFromFile'),\n     dict(type='Normalize', **img_norm_cfg),\n     dict(type='ImageToTensor', keys=['img']),\n     dict(type='ToTensor', keys=['gt_label']),\n"
+                },
+                {
+                    "date": 1672058428034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,20 +13,9 @@\n img_norm_cfg = dict(\n     mean=[0, 0, 0],\n     std=[255.0, 255.0, 255.0],\n     to_rgb=False)\n-train_pipeline = [\n-    # dict(type='RandomCrop', size=32, padding=4),\n-    # dict(type='RandomFlip', flip_prob=0.5, direction='horizontal')\n-    # ,\n-    delete\n-    dict(type='Resize', size=(224, 224)),\n-    dict(type='LoadImageFromFile'),\n-    dict(type='Normalize', **img_norm_cfg),\n-    dict(type='ImageToTensor', keys=['img']),\n-    dict(type='ToTensor', keys=['gt_label']),\n-    dict(type='Collect', keys=['img', 'gt_label'])\n-]\n+\n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n         type='TNT',\n"
+                },
+                {
+                    "date": 1672058436702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n     f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n"
+                }
+            ],
+            "date": 1672058001881,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='Conformer', arch='base', drop_path_rate=0.1, init_cfg=None),\n    neck=None,\n    head=dict(\n        type='ConformerHead',\n        num_classes=9,\n        in_channels=[1536, 576],\n        init_cfg=None,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n    init_cfg=[\n        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n    ],\n)\n\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='TNT',\n        arch='s',\n        img_size=224,\n        patch_size=16,\n        in_channels=3,\n        ffn_ratio=4,\n        qkv_bias=False,\n        drop_rate=0.,\n        attn_drop_rate=0.,\n        drop_path_rate=0.1,\n        first_stride=4,\n        num_fcs=2,\n        init_cfg=[\n            dict(type='TruncNormal', layer='Linear', std=.02),\n            dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n        ]),\n    neck=None,\n    head=dict(\n        type='LinearClsHead',\n        num_classes=9,\n        in_channels=384,\n        loss=dict(\n            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n        topk=(1, 5),\n        init_cfg=dict(type='TruncNormal', layer='Linear', std=.02)))\n"
+        }
+    ]
+}

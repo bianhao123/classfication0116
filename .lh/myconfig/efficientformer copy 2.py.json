@@ -1,0 +1,18 @@
+{
+    "sourceFile": "myconfig/efficientformer copy 2.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1673780117166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1673780117165,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='EfficientFormer',\n        arch='l1',\n        drop_path_rate=0,\n        init_cfg=[\n            dict(\n                type='TruncNormal',\n                layer=['Conv2d', 'Linear'],\n                std=.02,\n                bias=0.),\n            dict(type='Constant', layer=['GroupNorm'], val=1., bias=0.),\n            dict(type='Constant', layer=['LayerScale'], val=1e-5)\n        ]),\n    neck=dict(type='GlobalAveragePooling', dim=1),\n    head=dict(\n        type='EfficientFormerClsHead', in_channels=448, num_classes=1000))\n"
+        }
+    ]
+}

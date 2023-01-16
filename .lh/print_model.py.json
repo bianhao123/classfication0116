@@ -1,0 +1,106 @@
+{
+    "sourceFile": "print_model.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 22,
+            "patches": [
+                {
+                    "date": 1672058995724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672059005692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n import timm\n from pprint import pprint\n-model_names = timm.list_models('*resne*t*')\n+model_names = timm.list_models('*max*')\n pprint(model_names)\n"
+                },
+                {
+                    "date": 1672059086309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,11 @@\n import timm\n from pprint import pprint\n+\n+import torch\n model_names = timm.list_models('*max*')\n+\n pprint(model_names)\n+model = timm.create_model('')\n+data = torch.randn(1, 3, 32, 32)\n+output = model(data)\n+print(output.shape)\n"
+                },
+                {
+                    "date": 1672059128305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*max*')\n+model_names = timm.list_models('*CaiT*')\n \n pprint(model_names)\n-model = timm.create_model('')\n+model = timm.create_model('CaiT')\n data = torch.randn(1, 3, 32, 32)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059148231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*CaiT*')\n+model_names = timm.list_models('*cait*')\n \n pprint(model_names)\n model = timm.create_model('CaiT')\n data = torch.randn(1, 3, 32, 32)\n"
+                },
+                {
+                    "date": 1672059157003,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n import torch\n model_names = timm.list_models('*cait*')\n \n pprint(model_names)\n-model = timm.create_model('CaiT')\n+model = timm.create_model('cait_s24_224')\n data = torch.randn(1, 3, 32, 32)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059198383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*cait*')\n+model_names = timm.list_models('*PVT-V2*')\n \n pprint(model_names)\n model = timm.create_model('cait_s24_224')\n data = torch.randn(1, 3, 32, 32)\n"
+                },
+                {
+                    "date": 1672059217602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*PVT-V2*')\n+model_names = timm.list_models('*pvt*')\n \n pprint(model_names)\n model = timm.create_model('cait_s24_224')\n data = torch.randn(1, 3, 32, 32)\n"
+                },
+                {
+                    "date": 1672059235571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n import torch\n model_names = timm.list_models('*pvt*')\n \n pprint(model_names)\n-model = timm.create_model('cait_s24_224')\n+model = timm.create_model('pvt_v2_b0')\n data = torch.randn(1, 3, 32, 32)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059554726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n import torch\n model_names = timm.list_models('*pvt*')\n \n pprint(model_names)\n-model = timm.create_model('pvt_v2_b0')\n-data = torch.randn(1, 3, 32, 32)\n-output = model(data)\n-print(output.shape)\n+# model = timm.create_model('pvt_v2_b0')\n+# data = torch.randn(1, 3, 32, 32)\n+# output = model(data)\n+# print(output.shape)\n"
+                },
+                {
+                    "date": 1672059561190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*pvt*')\n+model_names = timm.list_models('*efficientformer*')\n \n pprint(model_names)\n+\n # model = timm.create_model('pvt_v2_b0')\n # data = torch.randn(1, 3, 32, 32)\n # output = model(data)\n # print(output.shape)\n"
+                },
+                {
+                    "date": 1672059578969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n model_names = timm.list_models('*efficientformer*')\n \n pprint(model_names)\n \n-# model = timm.create_model('pvt_v2_b0')\n+# model = timm.create_model('efficientformer_l1')\n # data = torch.randn(1, 3, 32, 32)\n # output = model(data)\n # print(output.shape)\n"
+                },
+                {
+                    "date": 1672059609739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n model_names = timm.list_models('*efficientformer*')\n \n pprint(model_names)\n \n-# model = timm.create_model('efficientformer_l1')\n-# data = torch.randn(1, 3, 32, 32)\n-# output = model(data)\n-# print(output.shape)\n+model = timm.create_model('efficientformer_l3')\n+data = torch.randn(1, 3, 32, 32)\n+output = model(data)\n+print(output.shape)\n"
+                },
+                {
+                    "date": 1672059624288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,7 @@\n \n pprint(model_names)\n \n model = timm.create_model('efficientformer_l3')\n-data = torch.randn(1, 3, 32, 32)\n+data = torch.randn(1, 3, 224, 224)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059670121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*efficientformer*')\n+model_names = timm.list_models('*GCViT*')\n \n pprint(model_names)\n \n model = timm.create_model('efficientformer_l3')\n-data = torch.randn(1, 3, 224, 224)\n+data = torch.randn(1, 3, 32, 224)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059681678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,7 @@\n \n pprint(model_names)\n \n model = timm.create_model('efficientformer_l3')\n-data = torch.randn(1, 3, 32, 224)\n+data = torch.randn(1, 3, 224, 224)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672059894355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*GCViT*')\n+model_names = timm.list_models('*PoolFormer*')\n \n pprint(model_names)\n \n model = timm.create_model('efficientformer_l3')\n"
+                },
+                {
+                    "date": 1672059914746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*PoolFormer*')\n+model_names = timm.list_models('*poolformer*')\n \n pprint(model_names)\n \n-model = timm.create_model('efficientformer_l3')\n-data = torch.randn(1, 3, 224, 224)\n-output = model(data)\n-print(output.shape)\n+# model = timm.create_model('efficientformer_l3')\n+# data = torch.randn(1, 3, 224, 224)\n+# output = model(data)\n+# print(output.shape)\n"
+                },
+                {
+                    "date": 1672059929921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n model_names = timm.list_models('*poolformer*')\n \n pprint(model_names)\n \n-# model = timm.create_model('efficientformer_l3')\n-# data = torch.randn(1, 3, 224, 224)\n-# output = model(data)\n-# print(output.shape)\n+model = timm.create_model('efficientformer_l3')\n+data = torch.randn(1, 3, 224, 224)\n+output = model(data)\n+print(output.shape)\n"
+                },
+                {
+                    "date": 1672059977806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n model_names = timm.list_models('*poolformer*')\n \n pprint(model_names)\n \n-model = timm.create_model('efficientformer_l3')\n-data = torch.randn(1, 3, 224, 224)\n+model = timm.create_model('poolformer_s12')\n+data = torch.randn(1, 3, 32, 32)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672060188032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import timm\n from pprint import pprint\n \n import torch\n-model_names = timm.list_models('*poolformer*')\n+model_names = timm.list_models('*coat*')\n \n pprint(model_names)\n \n model = timm.create_model('poolformer_s12')\n"
+                },
+                {
+                    "date": 1672060206226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n model_names = timm.list_models('*coat*')\n \n pprint(model_names)\n \n-model = timm.create_model('poolformer_s12')\n+model = timm.create_model('coat_mini')\n data = torch.randn(1, 3, 32, 32)\n output = model(data)\n print(output.shape)\n"
+                },
+                {
+                    "date": 1672060253418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,7 @@\n \n pprint(model_names)\n \n model = timm.create_model('coat_mini')\n-data = torch.randn(1, 3, 32, 32)\n+data = torch.randn(1, 3, 224, 224)\n output = model(data)\n print(output.shape)\n"
+                }
+            ],
+            "date": 1672058995724,
+            "name": "Commit-0",
+            "content": "import timm\nfrom pprint import pprint\nmodel_names = timm.list_models('*resne*t*')\npprint(model_names)\n"
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "sourceFile": "myconfig/efficientformer.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1672059722363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672059744190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,24 +17,12 @@\n \n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n-        type='TNT',\n-        arch='s',\n-        img_size=224,\n-        patch_size=16,\n+        type='TIMMBackbone',\n+        model_name=\"pvt_v2_b0\",\n         in_channels=3,\n-        ffn_ratio=4,\n-        qkv_bias=False,\n-        drop_rate=0.,\n-        attn_drop_rate=0.,\n-        drop_path_rate=0.1,\n-        first_stride=4,\n-        num_fcs=2,\n-        init_cfg=[\n-            dict(type='TruncNormal', layer='Linear', std=.02),\n-            dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n-        ]),\n+        pretrained=True),\n     neck=None,\n     head=dict(\n         type='LinearClsHead',\n         num_classes=9,\n"
+                },
+                {
+                    "date": 1672059774454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,11 +18,11 @@\n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n         type='TIMMBackbone',\n-        model_name=\"pvt_v2_b0\",\n+        model_name=\"efficientformer_l3\",\n         in_channels=3,\n-        pretrained=True),\n+        pretrained=False),\n     neck=None,\n     head=dict(\n         type='LinearClsHead',\n         num_classes=9,\n"
+                },
+                {
+                    "date": 1672059805575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,8 @@\n     neck=None,\n     head=dict(\n         type='LinearClsHead',\n         num_classes=9,\n-        in_channels=384,\n+        in_channels=512,\n         loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n         topk=(1, 5),\n         init_cfg=dict(type='TruncNormal', layer='Linear', std=.02)))\n"
+                },
+                {
+                    "date": 1673780125675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,16 +17,19 @@\n \n model = dict(\n     type='ImageClassifier',\n     backbone=dict(\n-        type='TIMMBackbone',\n-        model_name=\"efficientformer_l3\",\n-        in_channels=3,\n-        pretrained=False),\n-    neck=None,\n+        type='EfficientFormer',\n+        arch='l1',\n+        drop_path_rate=0,\n+        init_cfg=[\n+            dict(\n+                type='TruncNormal',\n+                layer=['Conv2d', 'Linear'],\n+                std=.02,\n+                bias=0.),\n+            dict(type='Constant', layer=['GroupNorm'], val=1., bias=0.),\n+            dict(type='Constant', layer=['LayerScale'], val=1e-5)\n+        ]),\n+    neck=dict(type='GlobalAveragePooling', dim=1),\n     head=dict(\n-        type='LinearClsHead',\n-        num_classes=9,\n-        in_channels=512,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n-        topk=(1, 5),\n-        init_cfg=dict(type='TruncNormal', layer='Linear', std=.02)))\n+        type='EfficientFormerClsHead', in_channels=448, num_classes=1000))\n"
+                },
+                {
+                    "date": 1673780133072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,5 +31,5 @@\n             dict(type='Constant', layer=['LayerScale'], val=1e-5)\n         ]),\n     neck=dict(type='GlobalAveragePooling', dim=1),\n     head=dict(\n-        type='EfficientFormerClsHead', in_channels=448, num_classes=1000))\n+        type='EfficientFormerClsHead', in_channels=448, num_classes=9))\n"
+                },
+                {
+                    "date": 1673780154383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n     f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n"
+                },
+                {
+                    "date": 1673780214071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n     f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n"
+                },
+                {
+                    "date": 1673780221260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n-    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n+    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n     f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n"
+                },
+                {
+                    "date": 1673780309964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,5 +31,5 @@\n             dict(type='Constant', layer=['LayerScale'], val=1e-5)\n         ]),\n     neck=dict(type='GlobalAveragePooling', dim=1),\n     head=dict(\n-        type='EfficientFormerClsHead', in_channels=448, num_classes=9))\n+        type='EfficientFormerClsHead', in_channels=448, num_classes=9, distillation=False))\n"
+                }
+            ],
+            "date": 1672059722363,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='TNT',\n        arch='s',\n        img_size=224,\n        patch_size=16,\n        in_channels=3,\n        ffn_ratio=4,\n        qkv_bias=False,\n        drop_rate=0.,\n        attn_drop_rate=0.,\n        drop_path_rate=0.1,\n        first_stride=4,\n        num_fcs=2,\n        init_cfg=[\n            dict(type='TruncNormal', layer='Linear', std=.02),\n            dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n        ]),\n    neck=None,\n    head=dict(\n        type='LinearClsHead',\n        num_classes=9,\n        in_channels=384,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n        topk=(1, 5),\n        init_cfg=dict(type='TruncNormal', layer='Linear', std=.02)))\n"
+        }
+    ]
+}

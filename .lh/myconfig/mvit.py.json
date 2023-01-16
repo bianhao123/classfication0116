@@ -1,0 +1,46 @@
+{
+    "sourceFile": "myconfig/mvit.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1672057604877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672057610745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     neck=dict(type='GlobalAveragePooling'),\n     head=dict(\n         type='LinearClsHead',\n         in_channels=768,\n-        num_classes=1000,\n+        num_classes=9,\n         loss=dict(\n             type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n     ),\n     head=dict(\n"
+                },
+                {
+                    "date": 1672057622566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,17 +18,9 @@\n     head=dict(\n         type='LinearClsHead',\n         in_channels=768,\n         num_classes=9,\n-        loss=dict(\n-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n-    ),\n-    head=dict(\n-        type='ConformerHead',\n-        num_classes=9,\n-        in_channels=[1536, 576],\n-        init_cfg=None,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0))\n     init_cfg=[\n         dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n     ],\n"
+                },
+                {
+                    "date": 1672057638480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,6 @@\n     head=dict(\n         type='LinearClsHead',\n         in_channels=768,\n         num_classes=9,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0))\n-    init_cfg=[\n-        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n-        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n-    ],\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n )\n"
+                },
+                {
+                    "date": 1672057700595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,9 @@\n         type='LinearClsHead',\n         in_channels=768,\n         num_classes=9,\n         loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n+    init_cfg=[\n+        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n+        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n+    ],\n )\n"
+                },
+                {
+                    "date": 1672060993543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,10 @@\n     type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n \n model = dict(\n     type='ImageClassifier',\n-    backbone=dict(type='MViT', arch='tiny', drop_path_rate=0.1),\n+    backbone=dict(type='MViT', arch='tiny', drop_path_rate=0.1,\n+                  img_size=32, ),\n     neck=dict(type='GlobalAveragePooling'),\n     head=dict(\n         type='LinearClsHead',\n         in_channels=768,\n"
+                },
+                {
+                    "date": 1673775853500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \n model = dict(\n     type='ImageClassifier',\n     backbone=dict(type='MViT', arch='tiny', drop_path_rate=0.1,\n-                  img_size=32, ),\n+                  img_size=64, ),\n     neck=dict(type='GlobalAveragePooling'),\n     head=dict(\n         type='LinearClsHead',\n         in_channels=768,\n"
+                },
+                {
+                    "date": 1673776080338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n-    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n"
+                }
+            ],
+            "date": 1672057604877,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(type='MViT', arch='tiny', drop_path_rate=0.1),\n    neck=dict(type='GlobalAveragePooling'),\n    head=dict(\n        type='LinearClsHead',\n        in_channels=768,\n        num_classes=1000,\n        loss=dict(\n            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n    ),\n    head=dict(\n        type='ConformerHead',\n        num_classes=9,\n        in_channels=[1536, 576],\n        init_cfg=None,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n    init_cfg=[\n        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n    ],\n)\n"
+        }
+    ]
+}

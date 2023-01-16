@@ -1,0 +1,26 @@
+{
+    "sourceFile": "myconfig/mlp_mixer.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1673793770391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1673793781854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n-    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n+    f'{root_path}/configs/_base_/schedules/mydata_bs128_224.py',\n     f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n"
+                },
+                {
+                    "date": 1673793819087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n-    f'{root_path}/configs/_base_/schedules/mydata_bs128_224.py',\n+    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n     f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n"
+                }
+            ],
+            "date": 1673793770391,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\nimg_norm_cfg = dict(\n    mean=[0, 0, 0],\n    std=[255.0, 255.0, 255.0],\n    to_rgb=False)\n\n# model settings\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='MlpMixer',\n        arch='b',\n        img_size=224,\n        patch_size=16,\n        drop_rate=0.1,\n        init_cfg=[\n            dict(\n                type='Kaiming',\n                layer='Conv2d',\n                mode='fan_in',\n                nonlinearity='linear')\n        ]),\n    neck=dict(type='GlobalAveragePooling', dim=1),\n    head=dict(\n        type='LinearClsHead',\n        num_classes=9,\n        in_channels=768,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n        topk=(1, 5),\n    ),\n)\n"
+        }
+    ]
+}

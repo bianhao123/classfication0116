@@ -1,0 +1,34 @@
+{
+    "sourceFile": "myconfig/Conformer.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1672057368598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1672057406604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n         type='Conformer', arch='base', drop_path_rate=0.1, init_cfg=None),\n     neck=None,\n     head=dict(\n         type='ConformerHead',\n-        num_classes=1000,\n+        num_classes=9,\n         in_channels=[1536, 576],\n         init_cfg=None,\n         loss=dict(\n             type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n@@ -27,8 +27,5 @@\n     init_cfg=[\n         dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n     ],\n-    train_cfg=dict(augments=[\n-        dict(type='BatchMixup', alpha=0.8, num_classes=1000, prob=0.5),\n-        dict(type='BatchCutMix', alpha=1.0, num_classes=1000, prob=0.5)\n-    ]))\n+)\n"
+                },
+                {
+                    "date": 1672057462789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,9 @@\n         type='ConformerHead',\n         num_classes=9,\n         in_channels=[1536, 576],\n         init_cfg=None,\n-        loss=dict(\n-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n         cal_acc=False),\n     init_cfg=[\n         dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n"
+                },
+                {
+                    "date": 1672057481783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,9 @@\n         type='ConformerHead',\n         num_classes=9,\n         in_channels=[1536, 576],\n         init_cfg=None,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n-        cal_acc=False),\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),),\n     init_cfg=[\n         dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n     ],\n"
+                },
+                {
+                    "date": 1673779219702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n root_path = '/data111/bianhao/code/xy/mmclassification'\n _base_ = [\n-    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n-    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n+    f'{root_path}/configs/_base_/schedules/mydata_bs128_resize224.py',\n+    f'{root_path}/configs/_base_/datasets/mydata_bs128_resize224.py', f'{root_path}/configs/_base_/default_runtime.py'\n ]\n \n evaluation = dict(interval=1, metric=[\n                   \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n@@ -20,9 +20,9 @@\n         type='ConformerHead',\n         num_classes=9,\n         in_channels=[1536, 576],\n         init_cfg=None,\n-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),),\n+        loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),\n     init_cfg=[\n         dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n     ],\n"
+                }
+            ],
+            "date": 1672057368598,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='Conformer', arch='base', drop_path_rate=0.1, init_cfg=None),\n    neck=None,\n    head=dict(\n        type='ConformerHead',\n        num_classes=1000,\n        in_channels=[1536, 576],\n        init_cfg=None,\n        loss=dict(\n            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),\n        cal_acc=False),\n    init_cfg=[\n        dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),\n        dict(type='Constant', layer='LayerNorm', val=1., bias=0.)\n    ],\n    train_cfg=dict(augments=[\n        dict(type='BatchMixup', alpha=0.8, num_classes=1000, prob=0.5),\n        dict(type='BatchCutMix', alpha=1.0, num_classes=1000, prob=0.5)\n    ]))\n"
+        }
+    ]
+}

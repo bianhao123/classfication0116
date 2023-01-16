@@ -1,0 +1,18 @@
+{
+    "sourceFile": "myconfig/PoolFormer.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1672057000714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1672057000714,
+            "name": "Commit-0",
+            "content": "root_path = '/data111/bianhao/code/xy/mmclassification'\n_base_ = [\n    f'{root_path}/configs/_base_/schedules/mydata_bs128.py',\n    f'{root_path}/configs/_base_/datasets/mydata_bs128.py', f'{root_path}/configs/_base_/default_runtime.py'\n]\n\nevaluation = dict(interval=1, metric=[\n                  \"accuracy\", \"precision\", \"recall\", \"f1_score\"])\n\ncheckpoint_config = dict(interval=10)\nlog_config = dict(interval=100, hooks=[dict(\n    type='TextLoggerHook'), dict(type='TensorboardLoggerHook')])\n\nmodel = dict(\n    type='ImageClassifier',\n    backbone=dict(\n        type='PoolFormer',\n        arch='m36',\n        drop_path_rate=0.1,\n        init_cfg=[\n            dict(\n                type='TruncNormal',\n                layer=['Conv2d', 'Linear'],\n                std=.02,\n                bias=0.),\n            dict(type='Constant', layer=['GroupNorm'], val=1., bias=0.),\n        ]),\n    neck=dict(type='GlobalAveragePooling'),\n    head=dict(\n        type='LinearClsHead',\n        num_classes=9,\n        in_channels=768,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n    ))\n"
+        }
+    ]
+}
